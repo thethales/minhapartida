@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marcador de Pontos - Jogos de Tabuleiro</title>
+    <script type="module" crossorigin src="/assets/index-B5fkvkEk.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-BP8vRAkT.css">
+  </head>
+  <body>
+    <div class="scorecard-container" id="scorecard-app">
+      <header>
+        <div class="header-main">
+          <div class="game-title-container">
+            <input type="text" id="game-title" class="game-title-input" value="Minha Partida" placeholder="Título da Partida / Jogo" />
+            <span class="edit-icon-indicator" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </span>
+          </div>
+          <button id="menu-toggle-btn" class="menu-toggle" aria-label="Menu de Histórico">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+        <div class="header-subtitle-row">
+          <div class="badges-group">
+            <div class="players-badge-wrapper">
+              <button id="players-badge-btn" class="players-badge-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Alterar número de jogadores">
+                <svg class="players-badge-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <span id="badge-player-count">4 Jogadores</span>
+              </button>
+              <div id="players-popover" class="players-popover">
+                <div class="popover-arrow"></div>
+                <div class="popover-header">Jogadores</div>
+                <div class="popover-body">
+                  <div class="stepper-control">
+                    <button id="decrement-players-btn" class="stepper-btn" type="button" aria-label="Remover Jogador">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                    <span id="player-count-display">4</span>
+                    <button id="increment-players-btn" class="stepper-btn" type="button" aria-label="Adicionar Jogador">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Board Game Geek Selector -->
+            <div class="gamedb-badge-wrapper">
+              <button id="gamedb-badge-btn" class="gamedb-badge-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Pesquisar jogo no Board Game Geek">
+                <svg class="gamedb-badge-icon" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <span id="badge-game-name">Selecione Jogo</span>
+              </button>
+              <div id="gamedb-popover" class="gamedb-popover">
+                <div class="popover-arrow"></div>
+                <h4 class="popover-header">Buscar Jogo (BGG)</h4>
+                <div class="gamedb-search-row">
+                  <input type="text" id="gamedb-search-input" placeholder="Buscar no BGG..." class="gamedb-search-input" />
+                  <button id="gamedb-search-btn" class="gamedb-search-btn" type="button">Buscar</button>
+                </div>
+                <div id="gamedb-results" class="gamedb-results-list">
+                  <div class="gamedb-empty-state">Busque um jogo acima...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Help & Guidance Badge -->
+            <div class="help-badge-wrapper">
+              <button id="help-badge-btn" class="help-badge-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Instruções e ajuda">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+              </button>
+              <div id="help-popover" class="help-popover">
+                <div class="popover-arrow"></div>
+                <div class="popover-header">Ajuda e Instruções</div>
+                <div class="popover-body">
+                  <p><strong>1. Nomeie os Jogadores:</strong> Clique ou toque no nome de um jogador para digitar um novo ou escolher nomes anteriores salvos no seu histórico.</p>
+                  <p><strong>2. Insira as Pontuações:</strong> Digite os pontos diretamente na tabela abaixo de cada nome de jogador.</p>
+                  <p><strong>3. Navegação Fácil:</strong> Pressione <strong>Enter</strong> ou <strong>setas do teclado</strong> para pular para a próxima célula.</p>
+                  <p><strong>4. Tabelas Contíguas:</strong> Ao preencher a tabela 1 de cada linha, a digitação salta de forma contínua para a tabela 2.</p>
+                  <p><strong>5. Histórico e Sincronização:</strong> Suas partidas são salvas automaticamente em tempo real! Salve de forma permanente clicando no ícone do menu superior direito.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div id="tables-container" class="tables-dynamic-grid">
+        <!-- Table 1 (Players 1 to 4) -->
+        <div class="table-wrapper" id="wrapper-table-1">
+          <div class="table-title-header">Jogadores 1 - 4</div>
+          <table id="score-table-1">
+            <thead>
+              <tr class="player-names-row-1">
+                <!-- Managed dynamically via JS -->
+              </tr>
+              <tr class="totals-row-1 totals-row">
+                <!-- Managed dynamically via JS -->
+              </tr>
+            </thead>
+            <tbody class="tbody-1">
+              <!-- Managed dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Table 2 (Players 5 to 8) -->
+        <div class="table-wrapper hidden-table-wrapper" id="wrapper-table-2">
+          <div class="table-title-header-secondary">Jogadores 5 - 8</div>
+          <table id="score-table-2">
+            <thead>
+              <tr class="player-names-row-2">
+                <!-- Managed dynamically via JS -->
+              </tr>
+              <tr class="totals-row-2 totals-row">
+                <!-- Managed dynamically via JS -->
+              </tr>
+            </thead>
+            <tbody class="tbody-2">
+              <!-- Managed dynamically via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="controls">
+ 
+
+        <div class="leaderboard-mini-box" id="leaderboard-box">
+          <div class="leaderboard-title">Top 3 Atual</div>
+          <div class="leaderboard-ranks" id="leaderboard-ranks">
+            <!-- Filled dynamically via JS -->
+          </div>
+        </div>
+      </div>
+
+      <footer class="session-footer">
+        Partidas salvas no histórico: <strong id="session-count-val">0</strong>
+      </footer>
+    </div>
+
+    <!-- History Sidebar Drawer -->
+    <div id="history-sidebar" class="history-sidebar">
+      <div class="sidebar-header">
+        <h2>Histórico</h2>
+        <button id="sidebar-close-btn" class="sidebar-close-btn" aria-label="Fechar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <div class="sidebar-actions">
+          <button id="save-session-btn" class="sidebar-action-btn primary" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+            Salvar Partida Atual
+          </button>
+          <button id="new-session-btn" class="sidebar-action-btn secondary" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Novo Jogo
+          </button>
+        </div>
+        <div class="search-section">
+          <div class="search-wrapper">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="history-search-input" class="history-search-input" placeholder="Buscar partidas..." aria-label="Buscar partidas no histórico" />
+          </div>
+        </div>
+        <div class="history-section">
+          <h3>Partidas Salvas</h3>
+          <div id="history-list" class="history-list">
+            <p class="empty-history-text">Nenhuma sessão salva no histórico.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Backdrop -->
+    <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+    <!-- Custom Beautiful Dialog Modal -->
+    <div id="custom-confirm-modal" class="custom-modal">
+      <div class="custom-modal-content">
+        <h3 id="custom-confirm-title" class="custom-modal-title">Confirmação</h3>
+        <p id="custom-confirm-message" class="custom-modal-message">Mensagem de confirmação</p>
+        <div class="custom-modal-actions">
+          <button id="custom-confirm-cancel-btn" class="custom-modal-btn secondary">Cancelar</button>
+          <button id="custom-confirm-ok-btn" class="custom-modal-btn primary">Confirmar</button>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
